@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Track {
+  id              String          @id
+  title           String
+  artist          String
+  durationSeconds Int
+  thumbnailUrl    String
+  sourceUrl       String
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  favorites       Favorite[]
+  plays           PlayHistory[]
+  downloads       Download[]
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  trackId   String
+  track     Track    @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([trackId])
+  @@index([createdAt])
+}
+
+model PlayHistory {
+  id        String   @id @default(cuid())
+  trackId   String
+  track     Track    @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  playedAt  DateTime @default(now())
+
+  @@index([playedAt])
+  @@index([trackId])
+}
+
+model Download {
+  id          String   @id @default(cuid())
+  trackId     String
+  track       Track    @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  filePath    String
+  mimeType    String
+  sizeBytes   Int
+  status      String   @default("completed")
+  error       String?
+  startedAt   DateTime @default(now())
+  completedAt DateTime?
+  updatedAt   DateTime @updatedAt
+
+  @@unique([trackId])
+  @@index([completedAt])
+}
+
+model Setting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+model FavoriteSong {
+  id        String   @id @default(cuid())
+  title     String
+  artist    String
+  thumbnail String
+  videoId   String   @unique
+  addedAt   DateTime @default(now())
+
+  @@index([addedAt])
+}

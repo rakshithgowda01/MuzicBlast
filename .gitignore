@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+.next
+node_modules
+dist
+coverage
+tsconfig.tsbuildinfo
+*.db
+*.db-journal
+*.sqlite
+*.sqlite-journal
+public/downloads
