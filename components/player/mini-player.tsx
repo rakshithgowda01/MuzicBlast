@@ -33,6 +33,8 @@ export function MiniPlayer() {
   const [isLyricsOpen, setIsLyricsOpen] = React.useState(false);
   const [showQueue, setShowQueue] = React.useState(false);
 
+  const playerRef = React.useRef<HTMLDivElement>(null);
+
   const favoritesQuery = useFavorites();
   const { addFavorite, removeFavorite } = useFavoriteActions();
   const favoriteIds = new Set((favoritesQuery.data ?? []).map((item) => item.videoId));
@@ -51,6 +53,33 @@ export function MiniPlayer() {
     if (!isExpanded) {
       setShowQueue(false);
     }
+  }, [isExpanded]);
+
+  // Collapses player card when clicking anywhere on the page (capture phase click-away)
+  React.useEffect(() => {
+    if (!isExpanded) return;
+
+    function handleOutsideClick(event: PointerEvent) {
+      const target = event.target as HTMLElement;
+      if (!target) return;
+
+      // If clicked inside the player card, ignore
+      if (playerRef.current && playerRef.current.contains(target)) {
+        return;
+      }
+
+      // If clicked inside the lyrics drawer or portal, ignore
+      if (target.closest("[data-lyrics-drawer]") || target.closest(".lyrics-drawer")) {
+        return;
+      }
+
+      setIsExpanded(false);
+    }
+
+    document.addEventListener("pointerdown", handleOutsideClick, true);
+    return () => {
+      document.removeEventListener("pointerdown", handleOutsideClick, true);
+    };
   }, [isExpanded]);
 
   if (!activeTrack) {
@@ -153,6 +182,7 @@ export function MiniPlayer() {
               onClick={() => setIsExpanded(false)}
             />
             <motion.div
+              ref={playerRef}
               key="expanded-player"
               className="glass-panel fixed bottom-24 right-4 sm:right-6 z-[80] flex w-[min(92vw,360px)] flex-col items-center gap-4 rounded-[30px] p-5 shadow-2xl select-none animate-fade-in"
               initial={{ opacity: 0, y: 50, scale: 0.95 }}

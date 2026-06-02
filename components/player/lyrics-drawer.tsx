@@ -72,6 +72,7 @@ export function LyricsDrawer({ open, onClose }: LyricsDrawerProps) {
             onClick={onClose}
           />
           <motion.aside
+            data-lyrics-drawer="true"
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}

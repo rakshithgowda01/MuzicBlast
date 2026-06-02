@@ -101,11 +101,21 @@ body[data-ui-mode="coding"] .glass-panel {
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
 }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+/* Disable default scrollbars globally to ensure a clean visual look across all sections */
+*::-webkit-scrollbar {
+  display: none !important;
 }
 
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+* {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;  /* Firefox */
 }
+
+/* Remove Next.js dev watermark / logo at the bottom of the screen */
+nextjs-portal,
+#nextjs-portal,
+nextjs-devkit,
+#nextjs-devkit {
+  display: none !important;
+}
+
