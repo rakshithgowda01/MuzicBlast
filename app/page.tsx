@@ -39,7 +39,7 @@ export default function HomePage() {
   return (
     <div className="space-y-6 px-1 py-2 sm:px-2 sm:py-4 select-none">
       <div className="relative z-10 space-y-8">
-        <section className="-ml-3.5 sm:-ml-5.5 lg:-ml-7.5">
+        <section className="-ml-2 sm:-ml-3.5 lg:-ml-5">
           <div className="space-y-6">
             <div>
               <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-5xl">
