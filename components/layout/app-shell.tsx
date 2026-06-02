@@ -35,7 +35,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       />
       <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-red-950/55 via-black/35 to-black/70" />
       
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 pt-8 pb-32 sm:px-6 lg:px-8 overflow-y-auto min-h-0">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 pt-8 pb-32 sm:px-6 lg:px-8 overflow-y-auto min-h-0 no-scrollbar">
         <motion.div
           key={pathname}
           initial={uiMode === "coding" ? false : { opacity: 0, y: 12 }}

@@ -143,14 +143,23 @@ export function MiniPlayer() {
           </motion.div>
         ) : (
           // Expanded Glassmorphic Player Card / Window
-          <motion.div
-            key="expanded-player"
-            className="glass-panel fixed bottom-24 right-4 sm:right-6 z-[80] flex w-[min(92vw,360px)] flex-col items-center gap-4 rounded-[30px] p-5 shadow-2xl select-none animate-fade-in"
-            initial={{ opacity: 0, y: 50, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 50, scale: 0.95 }}
-            transition={{ type: "spring", damping: 25, stiffness: 220 }}
-          >
+          <>
+            <motion.div
+              key="player-overlay"
+              className="fixed inset-0 z-[79] bg-transparent cursor-default"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsExpanded(false)}
+            />
+            <motion.div
+              key="expanded-player"
+              className="glass-panel fixed bottom-24 right-4 sm:right-6 z-[80] flex w-[min(92vw,360px)] flex-col items-center gap-4 rounded-[30px] p-5 shadow-2xl select-none animate-fade-in"
+              initial={{ opacity: 0, y: 50, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 50, scale: 0.95 }}
+              transition={{ type: "spring", damping: 25, stiffness: 220 }}
+            >
             <div className="flex w-full items-center justify-between">
               <button
                 className="rounded-full p-1 text-muted-foreground hover:bg-white/10 hover:text-white transition cursor-pointer"
@@ -317,6 +326,7 @@ export function MiniPlayer() {
               />
             </div>
           </motion.div>
+          </>
         )}
       </AnimatePresence>
 
